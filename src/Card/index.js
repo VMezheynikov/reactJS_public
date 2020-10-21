@@ -29,13 +29,21 @@ class Card extends Component {
     };
 
     buttonUndoHandler = () => {
-        this.setState({ editMode: false });
+        const eTtl = this.state.title;
+        const eTxt = this.state.text;
+        this.setState({
+            editTitle: eTtl,
+            editText: eTxt,
+            editMode: false,
+        });
     };
 
     buttonSaveHandler = () => {
-        this.setState({ title: this.state.editTitle });
-        this.setState({ text: this.state.editText });
-        this.setState({ editMode: false });
+        this.setState({
+            title: this.state.editTitle,
+            text: this.state.editText,
+            editMode: false,
+        });
     };
 
     titleChangeHandler = (event) => {
@@ -79,19 +87,29 @@ class Card extends Component {
                 ) : (
                     <div>
                         <h1>
-                            <input
-                                id="checkboxStyle"
-                                type="checkbox"
-                                onClick={this.checkBoxChangeHandler}
-                            />
-                            <button
-                                className="btn"
-                                onClick={this.buttonEditHandler}>
-                                <FaPen />
-                            </button>
-                            <p style={{ overflow: 'hidden' }}>
-                                {this.state.title}
-                            </p>
+                            <div style={{ position: 'relative' }}>
+                                <input
+                                    id="checkboxStyle"
+                                    type="checkbox"
+                                    style={{
+                                        top: 0,
+                                        right: 0,
+                                    }}
+                                    onClick={this.checkBoxChangeHandler}
+                                />
+                                <button
+                                    className="btn"
+                                    onClick={this.buttonEditHandler}
+                                    style={{
+                                        top: 0,
+                                        right: 20,
+                                    }}>
+                                    <FaPen />
+                                </button>
+                                <p style={{ overflow: 'hidden' }}>
+                                    {this.state.title}
+                                </p>
+                            </div>
                         </h1>
                         <hr />
 
