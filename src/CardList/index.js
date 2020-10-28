@@ -100,10 +100,10 @@ class CardList extends Component {
 
     readonlyChangeHandler = (event) => {
         const mode = event != null && event.target.checked;
-        const cards = [...this.state.cards];
-        cards.map((card) => {
-            card.editMode = false;
-        });
+        const cards = this.state.cards.map((card) => ({
+            ...card,
+            editMode: false,
+        }));
         this.setState({ cards: cards, readOnly: mode });
     };
 
@@ -119,7 +119,7 @@ class CardList extends Component {
         this.setState({ cards: cards });
     };
 
-    saveCardHandler = (event, id) => {
+    saveCardHandler = (id) => (event) => {
         this.changeCard(event, id, (card) => {
             card.title = card.editTitle;
             card.text = card.editText;
@@ -127,7 +127,7 @@ class CardList extends Component {
         });
     };
 
-    editCardHandler = (event, id) => {
+    editCardHandler = (id) => (event) => {
         this.changeCard(event, id, (card) => {
             card.editTitle = card.title;
             card.editText = card.text;
@@ -136,7 +136,7 @@ class CardList extends Component {
         });
     };
 
-    undoCardHandler = (event, id) => {
+    undoCardHandler = (id) => (event) => {
         this.changeCard(event, id, (card) => {
             card.editTitle = card.title;
             card.editText = card.text;
@@ -144,19 +144,19 @@ class CardList extends Component {
         });
     };
 
-    titleChangeHandler = (event, id) => {
+    titleChangeHandler = (id) => (event) => {
         this.changeCard(event, id, (card) => {
             card.editTitle = event.target.value;
         });
     };
 
-    textChangeHandler = (event, id) => {
+    textChangeHandler = (id) => (event) => {
         this.changeCard(event, id, (card) => {
             card.editText = event.target.value;
         });
     };
 
-    styleChangeHandler = (event, id) => {
+    styleChangeHandler = (id) => (event) => {
         this.changeCard(event, id, (card) => {
             if (event != null && event.target.checked) {
                 card.cardStyle = { color: 'red' };
@@ -170,7 +170,7 @@ class CardList extends Component {
         let checkboxTitle = 'Read only';
 
         let cardList = (
-            <div>
+            <div style={{ display: 'flex', flexWrap: 'wrap' }}>
                 {this.state.cards.map((card, index) => {
                     return (
                         <Card
@@ -181,24 +181,12 @@ class CardList extends Component {
                             readOnly={this.state.readOnly}
                             editMode={card.editMode}
                             cardStyle={card.cardStyle}
-                            onSave={(event) =>
-                                this.saveCardHandler(event, card.id)
-                            }
-                            onEdit={(event) =>
-                                this.editCardHandler(event, card.id)
-                            }
-                            onUndo={(event) =>
-                                this.undoCardHandler(event, card.id)
-                            }
-                            onTitleChange={(event) =>
-                                this.titleChangeHandler(event, card.id)
-                            }
-                            onTextChange={(event) =>
-                                this.textChangeHandler(event, card.id)
-                            }
-                            onStyleChange={(event) =>
-                                this.styleChangeHandler(event, card.id)
-                            }
+                            onSave={this.saveCardHandler(card.id)}
+                            onEdit={this.editCardHandler(card.id)}
+                            onUndo={this.undoCardHandler(card.id)}
+                            onTitleChange={this.titleChangeHandler(card.id)}
+                            onTextChange={this.textChangeHandler(card.id)}
+                            onStyleChange={this.styleChangeHandler(card.id)}
                             key={card.id}>
                             {card.text}
                         </Card>
@@ -216,13 +204,13 @@ class CardList extends Component {
                         top: '5px',
                         width: '100px',
                     }}>
-                    <input
-                        id="checkboxStyle"
-                        type="checkbox"
-                        onClick={this.readonlyChangeHandler}
-                    />
-                    <label for="checkboxStyle">
+                    <label>
                         <b>{checkboxTitle}</b>
+                        <input
+                            id="checkboxStyle"
+                            type="checkbox"
+                            onClick={this.readonlyChangeHandler}
+                        />
                     </label>
                 </div>
                 <hr />

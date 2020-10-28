@@ -8,7 +8,7 @@ function App() {
             <header className="App-header">
                 <p>Test application.</p>
             </header>
-            <CardList>Inner card text.</CardList>
+            <CardList />
         </div>
     );
 }
