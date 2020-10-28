@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import Card from './Card';
+import CardList from './CardList';
 
 function App() {
     return (
@@ -8,7 +8,7 @@ function App() {
             <header className="App-header">
                 <p>Test application.</p>
             </header>
-            <Card title="Test card title">Inner card text.</Card>
+            <CardList>Inner card text.</CardList>
         </div>
     );
 }

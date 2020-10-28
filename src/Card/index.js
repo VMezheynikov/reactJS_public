@@ -6,84 +6,54 @@ import './Card.css';
 import TextInputField from './TextInputField';
 
 class Card extends Component {
-    state = {
-        cardStyle: {},
-        title: this.props.title,
-        text: this.props.children,
-        editTitle: this.props.title,
-        editText: this.props.children,
-        editMode: false,
-    };
-
-    checkBoxChangeHandler = (event) => {
-        if (event != null && event.target.checked) {
-            this.setState({ cardStyle: { color: 'red' } });
-        } else {
-            this.setState({ cardStyle: { color: 'green' } });
-        }
-    };
-
-    buttonEditHandler = () => {
-        this.setState({ editMode: true });
-        this.checkBoxChangeHandler();
-    };
-
-    buttonUndoHandler = () => {
-        const eTtl = this.state.title;
-        const eTxt = this.state.text;
-        this.setState({
-            editTitle: eTtl,
-            editText: eTxt,
-            editMode: false,
-        });
-    };
-
-    buttonSaveHandler = () => {
-        this.setState({
-            title: this.state.editTitle,
-            text: this.state.editText,
-            editMode: false,
-        });
-    };
-
-    titleChangeHandler = (event) => {
-        this.setState({ editTitle: event.target.value });
-    };
-
-    textChangeHandler = (event) => {
-        this.setState({ editText: event.target.value });
-    };
-
     render() {
-        return (
-            <div className="Card" style={this.state.cardStyle}>
-                {this.state.editMode ? (
+        let editPart = null;
+        if (!this.props.readOnly) {
+            editPart = (
+                <div>
                     <div>
-                        <div>
-                            <button
-                                className="btn"
-                                onClick={this.buttonUndoHandler}>
-                                <FaUndo />
-                            </button>
-                            <button
-                                className="btn"
-                                onClick={this.buttonSaveHandler}>
-                                <FaSave />
-                            </button>
-                        </div>
-                        <TextInputField
-                            id="TitleField"
-                            caption="Title"
-                            changed={this.titleChangeHandler}
-                            currentText={this.state.editTitle}></TextInputField>
-                        <hr />
-
-                        <TextInputField
-                            id="TextField"
-                            caption="Text"
-                            changed={this.textChangeHandler}
-                            currentText={this.state.editText}></TextInputField>
+                        <button className="btn" onClick={this.props.onUndo}>
+                            <FaUndo />
+                        </button>
+                        <button className="btn" onClick={this.props.onSave}>
+                            <FaSave />
+                        </button>
                     </div>
+                    <TextInputField
+                        id="TitleField"
+                        caption="Title"
+                        changed={this.props.onTitleChange}
+                        currentText={this.props.editTitle}></TextInputField>
+                    <hr />
+
+                    <TextInputField
+                        id="TextField"
+                        caption="Text"
+                        changed={this.props.onTextChange}
+                        currentText={this.props.editText}></TextInputField>
+                </div>
+            );
+        }
+
+        let editButton = null;
+        if (!this.props.readOnly) {
+            editButton = (
+                <button
+                    className="btn"
+                    onClick={this.props.onEdit}
+                    style={{
+                        top: 0,
+                        right: 20,
+                    }}>
+                    <FaPen />
+                </button>
+            );
+        }
+
+        return (
+            <div className="Card" style={this.props.cardStyle}>
+                {this.props.editMode ? (
+                    <div>{editPart}</div>
                 ) : (
                     <div>
                         <h1>
@@ -95,25 +65,16 @@ class Card extends Component {
                                         top: 0,
                                         right: 0,
                                     }}
-                                    onClick={this.checkBoxChangeHandler}
+                                    onClick={this.props.onStyleChange}
                                 />
-                                <button
-                                    className="btn"
-                                    onClick={this.buttonEditHandler}
-                                    style={{
-                                        top: 0,
-                                        right: 20,
-                                    }}>
-                                    <FaPen />
-                                </button>
+                                {editButton}
                                 <p style={{ overflow: 'hidden' }}>
-                                    {this.state.title}
+                                    {this.props.title}
                                 </p>
                             </div>
                         </h1>
                         <hr />
-
-                        <p style={{ overflow: 'hidden' }}>{this.state.text}</p>
+                        <p style={{ overflow: 'hidden' }}>{this.props.text}</p>
                     </div>
                 )}
             </div>
