@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+import styled from 'styled-components';
 import Card from '../Card/index';
+import Checkbox from './Checkbox';
 
 class CardList extends Component {
     state = {
@@ -205,12 +207,11 @@ class CardList extends Component {
                         width: '100px',
                     }}>
                     <label>
-                        <b>{checkboxTitle}</b>
-                        <input
-                            id="checkboxStyle"
-                            type="checkbox"
+                        <Checkbox
+                            checked={this.state.readOnly}
                             onClick={this.readonlyChangeHandler}
                         />
+                        <b> {checkboxTitle}</b>
                     </label>
                 </div>
                 <hr />
