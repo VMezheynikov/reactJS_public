@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import styled from 'styled-components';
-import Card from '../Card/index';
+import { FaTrash } from 'react-icons/fa';
+import Card from './Card/index';
 import Checkbox from './Checkbox';
 
 class CardList extends Component {
@@ -14,6 +14,7 @@ class CardList extends Component {
                 editText: '',
                 editMode: false,
                 cardStyle: {},
+                checked: false,
             },
             {
                 id: 'card2',
@@ -23,6 +24,7 @@ class CardList extends Component {
                 editText: '',
                 editMode: false,
                 cardStyle: {},
+                checked: false,
             },
             {
                 id: 'card3',
@@ -32,6 +34,7 @@ class CardList extends Component {
                 editText: '',
                 editMode: false,
                 cardStyle: {},
+                checked: false,
             },
             {
                 id: 'card4',
@@ -41,6 +44,7 @@ class CardList extends Component {
                 editText: '',
                 editMode: false,
                 cardStyle: {},
+                checked: false,
             },
             {
                 id: 'card5',
@@ -50,6 +54,7 @@ class CardList extends Component {
                 editText: '',
                 editMode: false,
                 cardStyle: {},
+                checked: false,
             },
             {
                 id: 'card6',
@@ -59,6 +64,7 @@ class CardList extends Component {
                 editText: '',
                 editMode: false,
                 cardStyle: {},
+                checked: false,
             },
             {
                 id: 'card7',
@@ -68,6 +74,7 @@ class CardList extends Component {
                 editText: '',
                 editMode: false,
                 cardStyle: {},
+                checked: false,
             },
             {
                 id: 'card8',
@@ -77,6 +84,7 @@ class CardList extends Component {
                 editText: '',
                 editMode: false,
                 cardStyle: {},
+                checked: false,
             },
             {
                 id: 'card9',
@@ -86,6 +94,7 @@ class CardList extends Component {
                 editText: '',
                 editMode: false,
                 cardStyle: {},
+                checked: false,
             },
             {
                 id: 'card10',
@@ -95,9 +104,15 @@ class CardList extends Component {
                 editText: '',
                 editMode: false,
                 cardStyle: {},
+                checked: false,
             },
         ],
         readOnly: false,
+    };
+
+    deleteCheckedCardsHandler = (event) => {
+        const cards = this.state.cards.filter((card) => !card.checked);
+        this.setState({ cards: cards });
     };
 
     readonlyChangeHandler = (event) => {
@@ -162,8 +177,10 @@ class CardList extends Component {
         this.changeCard(event, id, (card) => {
             if (event != null && event.target.checked) {
                 card.cardStyle = { color: 'red' };
+                card.checked = true;
             } else {
                 card.cardStyle = { color: 'green' };
+                card.checked = false;
             }
         });
     };
@@ -204,14 +221,22 @@ class CardList extends Component {
                         position: 'relative',
                         left: '5px',
                         top: '5px',
-                        width: '100px',
+                        width: '400px',
                     }}>
                     <label>
                         <Checkbox
-                            checked={this.state.readOnly}
+                            defaultChecked={this.state.readOnly}
                             onClick={this.readonlyChangeHandler}
                         />
-                        <b> {checkboxTitle}</b>
+                        <b> {checkboxTitle} </b>
+                    </label>
+                    <label>
+                        <button
+                            className="btn"
+                            onClick={this.deleteCheckedCardsHandler}>
+                            <FaTrash />
+                        </button>
+                        <b>Delete All Checked Cards</b>
                     </label>
                 </div>
                 <hr />
