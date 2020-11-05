@@ -28,7 +28,7 @@ const StyledCheckbox = styled.div`
     display: inline-block;
     width: 20px;
     height: 20px;
-    background: ${(props) => (props.checked ? 'green' : 'lightgreen')};
+    background: ${(props) => (props.defaultChecked ? 'green' : 'lightgreen')};
     border-radius: 3px;
     transition: all 150ms;
 
@@ -37,14 +37,14 @@ const StyledCheckbox = styled.div`
     }
 
     ${Icon} {
-        visibility: ${(props) => (props.checked ? 'visible' : 'hidden')};
+        visibility: ${(props) => (props.defaultChecked ? 'visible' : 'hidden')};
     }
 `;
 
 const Checkbox = ({ className, checked, ...props }) => (
     <CheckboxContainer className={className}>
         <HiddenCheckbox checked={checked} {...props} />
-        <StyledCheckbox checked={checked}>
+        <StyledCheckbox checked={checked} {...props}>
             <Icon viewBox="0 0 24 24">
                 <polyline points="21 4 4 21" />
                 <polyline points="4 4 21 21" />

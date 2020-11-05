@@ -225,7 +225,7 @@ class CardList extends Component {
                     }}>
                     <label>
                         <Checkbox
-                            checked={this.state.readOnly}
+                            defaultChecked={this.state.readOnly}
                             onClick={this.readonlyChangeHandler}
                         />
                         <b> {checkboxTitle} </b>
