@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { FaTrash } from 'react-icons/fa';
+import { FaClone } from 'react-icons/fa';
+import { v4 as uuidv4 } from 'uuid';
 import Card from './Card/index';
 import Checkbox from './Checkbox';
 
@@ -124,6 +126,23 @@ class CardList extends Component {
         this.setState({ cards: cards, readOnly: mode });
     };
 
+    addCardHandler = (event) => {
+        const cards = [
+            ...this.state.cards,
+            {
+                id: uuidv4(),
+                title: '',
+                text: '',
+                editTitle: '',
+                editText: '',
+                editMode: false,
+                cardStyle: {},
+                checked: false,
+            },
+        ];
+        this.setState({ cards: cards });
+    };
+
     changeCard = (event, id, func) => {
         const cardIndex = this.state.cards.findIndex((c) => {
             return c.id === id;
@@ -221,7 +240,7 @@ class CardList extends Component {
                         position: 'relative',
                         left: '5px',
                         top: '5px',
-                        width: '400px',
+                        width: '600px',
                     }}>
                     <label>
                         <Checkbox
@@ -236,7 +255,13 @@ class CardList extends Component {
                             onClick={this.deleteCheckedCardsHandler}>
                             <FaTrash />
                         </button>
-                        <b>Delete All Checked Cards</b>
+                        <b>Delete All Checked Cards </b>
+                    </label>
+                    <label>
+                        <button className="btn" onClick={this.addCardHandler}>
+                            <FaClone />
+                        </button>
+                        <b>Add New Card</b>
                     </label>
                 </div>
                 <hr />
