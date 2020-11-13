@@ -192,6 +192,12 @@ class CardList extends Component {
         });
     };
 
+    loadCardHandler = (id) => (event) => {
+        this.changeCard(event, id, (card) => {
+            card.loaded = true;
+        });
+    };
+
     styleChangeHandler = (id) => (event) => {
         this.changeCard(event, id, (card) => {
             if (event != null && event.target.checked) {
@@ -225,6 +231,8 @@ class CardList extends Component {
                             onTitleChange={this.titleChangeHandler(card.id)}
                             onTextChange={this.textChangeHandler(card.id)}
                             onStyleChange={this.styleChangeHandler(card.id)}
+                            afterLoad={this.loadCardHandler(card.id)}
+                            loaded={card.loaded}
                             key={card.id}>
                             {card.text}
                         </Card>

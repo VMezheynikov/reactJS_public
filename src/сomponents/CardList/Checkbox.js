@@ -46,8 +46,8 @@ const Checkbox = ({ className, checked, ...props }) => (
         <HiddenCheckbox checked={checked} {...props} />
         <StyledCheckbox checked={checked} {...props}>
             <Icon viewBox="0 0 24 24">
-                <polyline points="21 4 4 21" />
-                <polyline points="4 4 21 21" />
+                <polyline points="20 0 4 15" />
+                <polyline points="4 0 20 15" />
             </Icon>
         </StyledCheckbox>
     </CheckboxContainer>
