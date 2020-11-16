@@ -1,12 +1,13 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Spinner } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const withLoadingDelay = (WrappedComponent, className) => {
     return (props) => {
+        const [loaded, setLoaded] = useState(false);
         useEffect(() => {
             setTimeout(() => {
-                props.afterLoad();
+                setLoaded(true);
             }, 2000);
         }, []);
         let returnObj = (
@@ -14,7 +15,7 @@ const withLoadingDelay = (WrappedComponent, className) => {
                 <span className="sr-only">Loading...</span>
             </Spinner>
         );
-        if (props.loaded) {
+        if (loaded) {
             returnObj = <WrappedComponent {...props} />;
         }
         return (
