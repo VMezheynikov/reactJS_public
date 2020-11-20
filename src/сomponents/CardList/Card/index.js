@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import './Card.css';
 import CardHeader from './CardHeader';
 import CardBody from './CardBody';
@@ -9,27 +10,28 @@ const Card = (props) => {
         <div>
             <CardHeader
                 editMode={props.editMode}
-                readOnly={props.readOnly}
-                edited={props.onEdit}
-                changed={props.onTitleChange}
                 currentText={props.editTitle}
-                undoClick={props.onUndo}
-                saveClick={props.onSave}
-                styleChanged={props.onStyleChange}>
+                cardId={props.cardId}>
                 {props.title}
             </CardHeader>
             <hr />
             <CardBody
                 editMode={props.editMode}
-                readOnly={props.readOnly}
-                edited={props.onEdit}
-                changed={props.onTextChange}
                 currentText={props.editText}
-                styleChanged={props.onStyleChange}>
+                cardId={props.cardId}>
                 {props.text}
             </CardBody>
         </div>
     );
+};
+
+Card.propTypes = {
+    editMode: PropTypes.bool,
+    editTitle: PropTypes.string,
+    editText: PropTypes.string,
+    title: PropTypes.string,
+    text: PropTypes.string,
+    cardId: PropTypes.string,
 };
 
 export default withLoadingDelay(Card, 'Card');

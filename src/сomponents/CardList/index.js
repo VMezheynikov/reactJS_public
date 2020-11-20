@@ -4,6 +4,8 @@ import { FaClone } from 'react-icons/fa';
 import { v4 as uuidv4 } from 'uuid';
 import Card from './Card/index';
 import Checkbox from './Checkbox';
+import CardsContext from '../../context/cards-context';
+import CardCounter from '../CardCounter';
 
 class CardList extends Component {
     state = {
@@ -216,16 +218,10 @@ class CardList extends Component {
                             text={card.text}
                             editTitle={card.editTitle}
                             editText={card.editText}
-                            readOnly={this.state.readOnly}
                             editMode={card.editMode}
                             cardStyle={card.cardStyle}
-                            onSave={this.saveCardHandler(card.id)}
-                            onEdit={this.editCardHandler(card.id)}
-                            onUndo={this.undoCardHandler(card.id)}
-                            onTitleChange={this.titleChangeHandler(card.id)}
-                            onTextChange={this.textChangeHandler(card.id)}
-                            onStyleChange={this.styleChangeHandler(card.id)}
-                            key={card.id}>
+                            key={card.id}
+                            cardId={card.id}>
                             {card.text}
                         </Card>
                     );
@@ -234,39 +230,53 @@ class CardList extends Component {
         );
 
         return (
-            <div>
-                <div
-                    style={{
-                        position: 'relative',
-                        left: '5px',
-                        top: '5px',
-                        width: '600px',
-                    }}>
-                    <label>
-                        <Checkbox
-                            defaultChecked={this.state.readOnly}
-                            onClick={this.readonlyChangeHandler}
-                        />
-                        <b> {checkboxTitle} </b>
-                    </label>
-                    <label>
-                        <button
-                            className="btn"
-                            onClick={this.deleteCheckedCardsHandler}>
-                            <FaTrash />
-                        </button>
-                        <b>Delete All Checked Cards </b>
-                    </label>
-                    <label>
-                        <button className="btn" onClick={this.addCardHandler}>
-                            <FaClone />
-                        </button>
-                        <b>Add New Card</b>
-                    </label>
+            <CardsContext.Provider
+                value={{
+                    cards: this.state.cards,
+                    readOnly: this.state.readOnly,
+                    onEdit: this.editCardHandler,
+                    onSave: this.saveCardHandler,
+                    onUndo: this.undoCardHandler,
+                    onTitleChange: this.titleChangeHandler,
+                    onTextChange: this.textChangeHandler,
+                    onStyleChange: this.styleChangeHandler,
+                }}>
+                <div>
+                    <div
+                        style={{
+                            position: 'relative',
+                            left: '5px',
+                            top: '5px',
+                        }}>
+                        <label>
+                            <Checkbox
+                                defaultChecked={this.state.readOnly}
+                                onClick={this.readonlyChangeHandler}
+                            />
+                            <b> {checkboxTitle} </b>
+                        </label>
+                        <label>
+                            <button
+                                className="btn"
+                                onClick={this.deleteCheckedCardsHandler}>
+                                <FaTrash />
+                            </button>
+                            <b>Delete All Checked Cards </b>
+                        </label>
+                        <label>
+                            <button
+                                className="btn"
+                                onClick={this.addCardHandler}>
+                                <FaClone />
+                            </button>
+                            <b>Add New Card</b>
+                        </label>
+                        <CardCounter></CardCounter>
+                    </div>
+                    <hr />
+                    {cardList}
                 </div>
-                <hr />
-                {cardList}
-            </div>
+            </CardsContext.Provider>
         );
     }
 }
