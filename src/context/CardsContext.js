@@ -1,65 +1,33 @@
 import React, { Component } from 'react';
+import axious from 'axios';
+import { v4 as uuidv4 } from 'uuid';
 
 const CardsContext = React.createContext();
 
 class CardContextProvider extends Component {
     state = {
-        cards: [
-            {
-                id: 'id1',
-                headerText: 'Card 1',
-                bodyText: 'I expect some text here...',
-            },
-            {
-                id: 'id2',
-                headerText: 'Card 2',
-                bodyText: 'I expect some text here...',
-            },
-            {
-                id: 'id3',
-                headerText: 'Card 3',
-                bodyText: 'I expect some text here...',
-            },
-            {
-                id: 'id4',
-                headerText: 'Card 4',
-                bodyText: 'I expect some text here...',
-            },
-            {
-                id: 'id5',
-                headerText: 'Card 5',
-                bodyText: 'I expect some text here...',
-            },
-            {
-                id: 'id6',
-                headerText: 'Card 6',
-                bodyText: 'I expect some text here...',
-            },
-            {
-                id: 'id7',
-                headerText: 'Card 7',
-                bodyText: 'I expect some text here...',
-            },
-            {
-                id: 'id8',
-                headerText: 'Card 8',
-                bodyText: 'I expect some text here...',
-            },
-            {
-                id: 'id9',
-                headerText: 'Card 9',
-                bodyText: 'I expect some text here...',
-            },
-            {
-                id: 'id10',
-                headerText: 'Card 10',
-                bodyText: 'I expect some text here...',
-            },
-        ],
+        cards: [],
         readOnly: false,
     };
 
     cardsToRemove = [];
+
+    componentDidMount() {
+        axious
+            .get(
+                'https://raw.githubusercontent.com/BrunnerLivio/PokemonDataGraber/master/output.json',
+            )
+            .then((response) => {
+                const cards = response.data.slice(0, 15).map((i) => {
+                    return {
+                        id: 'id' + uuidv4(),
+                        headerText: i.Name,
+                        bodyText: i.About,
+                    };
+                });
+                this.setState({ cards: cards });
+            });
+    }
 
     checkBoxAppHandler = (event) => {
         const mode = event != null && event.target.checked;
@@ -69,9 +37,8 @@ class CardContextProvider extends Component {
 
     addCardHandler = () => {
         let cards = [...this.state.cards];
-        let lastCard = cards[cards.length - 1];
         let newCard = {
-            id: 'id' + (+lastCard.id.slice(2) + 1),
+            id: 'id' + uuidv4(),
             headerText: 'This is new Card',
             bodyText: 'I expect some text here...',
         };
