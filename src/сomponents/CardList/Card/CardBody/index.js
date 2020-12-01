@@ -1,16 +1,18 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import '../Card.css';
 import TextInputField from '../TextInputField';
+import { CardsContext } from '../../../../context/CardsContext';
 
 const CardBody = (props) => {
+    const cardContext = useContext(CardsContext);
     let editPart = null;
-    if (!props.readOnly) {
+    if (!cardContext.readOnly) {
         editPart = (
             <div>
                 <TextInputField
                     id="TextField"
                     caption="Text"
-                    changed={props.changed}
+                    changed={props.onTextChange}
                     currentText={props.currentText}></TextInputField>
             </div>
         );

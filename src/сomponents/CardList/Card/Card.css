@@ -6,6 +6,10 @@
     margin: 20px;
 }
 
+.CardHeader {
+    color: green;
+}
+
 /* Style buttons */
 .btn {
     background-color: DodgerBlue; /* Blue background */
