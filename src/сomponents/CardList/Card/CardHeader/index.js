@@ -4,30 +4,29 @@ import { FaSave } from 'react-icons/fa';
 import { FaUndo } from 'react-icons/fa';
 import '../Card.css';
 import TextInputField from '../TextInputField';
-import CardsContext from '../../../../context/cards-context';
+import { CardsContext } from '../../../../context/CardsContext';
 
 const CardHeader = (props) => {
-    const cardsContext = useContext(CardsContext);
+    const cardContext = useContext(CardsContext);
+
     let editPart = null;
-    if (!cardsContext.readOnly) {
+    let readOnly = cardContext.readOnly;
+
+    if (!readOnly) {
         editPart = (
             <div>
                 <div>
-                    <button
-                        className="btn"
-                        onClick={cardsContext.onUndo(props.cardId)}>
+                    <button className="btn" onClick={props.onUndo}>
                         <FaUndo />
                     </button>
-                    <button
-                        className="btn"
-                        onClick={cardsContext.onSave(props.cardId)}>
+                    <button className="btn" onClick={props.onSave}>
                         <FaSave />
                     </button>
                 </div>
                 <TextInputField
                     id="TitleField"
                     caption="Title"
-                    changed={cardsContext.onTitleChange(props.cardId)}
+                    changed={props.onTitleChange}
                     currentText={props.currentText}></TextInputField>
                 <hr />
             </div>
@@ -35,11 +34,11 @@ const CardHeader = (props) => {
     }
 
     let editButton = null;
-    if (!cardsContext.readOnly) {
+    if (!readOnly) {
         editButton = (
             <button
                 className="btn"
-                onClick={cardsContext.onEdit(props.cardId)}
+                onClick={props.onEdit}
                 style={{
                     top: 0,
                     right: 20,
@@ -63,7 +62,7 @@ const CardHeader = (props) => {
                                 top: 0,
                                 right: 0,
                             }}
-                            onClick={cardsContext.onStyleChange(props.cardId)}
+                            onClick={props.onStyleChange}
                         />
                         {editButton}
                         <p style={{ overflow: 'hidden' }}>{props.children}</p>
