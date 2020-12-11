@@ -12,3 +12,20 @@
     color: blue;
     border: 4px solid blue;
 }
+
+.App ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.App li {
+    display: inline-block;
+    margin: 20px;
+}
+
+.App a {
+    text-decoration: none;
+    color: black;
+    padding: 10px;
+}
