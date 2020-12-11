@@ -74,10 +74,6 @@ class CardContextProvider extends Component {
         this.setState({ cards: cards });
     };
 
-    setAuthorized = () => {
-        this.setState({ authorized: true });
-    };
-
     render() {
         return (
             <CardsContext.Provider
@@ -91,7 +87,6 @@ class CardContextProvider extends Component {
                     removeCard: this.cardsToRemoveHandler,
                     onChange: this.checkBoxAppHandler,
                     onSave: this.saveCardHandler,
-                    onAuthorized: this.setAuthorized,
                 }}>
                 {this.props.children}
             </CardsContext.Provider>

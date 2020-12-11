@@ -1,8 +1,9 @@
 import React from 'react';
 import './App.css';
-import Home from './Home/Home';
+import Home from './Home';
 import { CardContextProvider } from '../context/CardsContext';
-import { BrowserRouter, Link } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
+import AppHeader from '../сomponents/AppHeader';
 
 function App() {
     return (
@@ -10,28 +11,7 @@ function App() {
             {' '}
             <div className="App">
                 <BrowserRouter>
-                    <header className="App-header">
-                        <div>
-                            <p>Test application.</p>
-                        </div>
-                        <div>
-                            <nav>
-                                <ul>
-                                    <li>
-                                        <Link to="/home">Home</Link>
-                                        <Link
-                                            to={{
-                                                pathname: '/sing-in',
-                                                hash: '#submit',
-                                                search: '?quick-submit=true',
-                                            }}>
-                                            Sing in
-                                        </Link>
-                                    </li>
-                                </ul>
-                            </nav>
-                        </div>
-                    </header>
+                    <AppHeader />
                     <Home />
                 </BrowserRouter>
             </div>
