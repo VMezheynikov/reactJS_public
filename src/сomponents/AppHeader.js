@@ -21,7 +21,6 @@ function AppHeader() {
                                 }}>
                                 Sing in
                             </Link>
-                            <Link to="/not-found">Not found</Link>
                         </li>
                     </ul>
                 </nav>

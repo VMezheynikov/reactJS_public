@@ -9,8 +9,8 @@ const Home = () => {
         <div>
             <Switch>
                 <Route path="/sing-in" component={SignIn} />
-                <Route path="/not-found" component={NotFound} />
-                <Route path="/" component={CardList} />
+                <Route path="/home" component={CardList} />
+                <Route component={NotFound} />
             </Switch>
         </div>
     );
