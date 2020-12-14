@@ -1,17 +1,19 @@
 import React from 'react';
 import './App.css';
-import CardList from '../сomponents/CardList';
+import Home from './Home';
 import { CardContextProvider } from '../context/CardsContext';
+import { BrowserRouter } from 'react-router-dom';
+import AppHeader from '../сomponents/AppHeader';
 
 function App() {
     return (
         <CardContextProvider>
             {' '}
             <div className="App">
-                <header className="App-header">
-                    <p>Test application.</p>
-                </header>
-                <CardList />
+                <BrowserRouter>
+                    <AppHeader />
+                    <Home />
+                </BrowserRouter>
             </div>
         </CardContextProvider>
     );

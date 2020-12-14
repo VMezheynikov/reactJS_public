@@ -8,6 +8,7 @@ class CardContextProvider extends Component {
     state = {
         cards: [],
         readOnly: false,
+        authorized: false,
     };
 
     cardsToRemove = [];
@@ -78,6 +79,7 @@ class CardContextProvider extends Component {
             <CardsContext.Provider
                 value={{
                     readOnly: this.state.readOnly,
+                    authorized: this.state.authorized,
                     cards: this.state.cards,
                     cardsCount: this.state.cards.length,
                     onAdd: this.addCardHandler,
