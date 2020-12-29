@@ -58,8 +58,7 @@ const reducer = (state = initialState, action) => {
             return { ...state, readOnly: action.mode };
 
         case actionsTypes.INIT_CARDS:
-            const cards = [...action.cards];
-            return { ...state, cards: cards };
+            return { ...state, cards: [...action.cards] };
     }
     return state;
 };
