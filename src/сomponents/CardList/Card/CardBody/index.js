@@ -1,12 +1,11 @@
-import React, { useContext } from 'react';
+import React from 'react';
+import { connect } from 'react-redux';
 import '../Card.css';
 import TextInputField from '../TextInputField';
-import { CardsContext } from '../../../../context/CardsContext';
 
 const CardBody = (props) => {
-    const cardContext = useContext(CardsContext);
     let editPart = null;
-    if (!cardContext.readOnly) {
+    if (!props.ctxReadOnly) {
         editPart = (
             <div>
                 <TextInputField
@@ -23,7 +22,7 @@ const CardBody = (props) => {
             {props.editMode ? (
                 <div>{editPart}</div>
             ) : (
-                <div>
+                <div onDoubleClick={props.onDoubleClick}>
                     <p style={{ overflow: 'hidden' }}>{props.children}</p>
                 </div>
             )}
@@ -31,4 +30,8 @@ const CardBody = (props) => {
     );
 };
 
-export default CardBody;
+const mapStateToProps = (state) => {
+    return { ctxReadOnly: state.readOnly };
+};
+
+export default connect(mapStateToProps)(CardBody);

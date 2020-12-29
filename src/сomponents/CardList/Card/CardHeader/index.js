@@ -1,16 +1,14 @@
-import React, { useContext } from 'react';
+import React from 'react';
+import { connect } from 'react-redux';
 import { FaPen } from 'react-icons/fa';
 import { FaSave } from 'react-icons/fa';
 import { FaUndo } from 'react-icons/fa';
 import '../Card.css';
 import TextInputField from '../TextInputField';
-import { CardsContext } from '../../../../context/CardsContext';
 
 const CardHeader = (props) => {
-    const cardContext = useContext(CardsContext);
-
     let editPart = null;
-    let readOnly = cardContext.readOnly;
+    let readOnly = props.ctxReadOnly;
 
     if (!readOnly) {
         editPart = (
@@ -53,7 +51,7 @@ const CardHeader = (props) => {
             {props.editMode ? (
                 <div>{editPart}</div>
             ) : (
-                <div>
+                <div onDoubleClick={props.onDoubleClick}>
                     <div style={{ position: 'relative' }}>
                         <input
                             id="checkboxStyle"
@@ -73,4 +71,8 @@ const CardHeader = (props) => {
     );
 };
 
-export default CardHeader;
+const mapStateToProps = (state) => {
+    return { ctxReadOnly: state.readOnly };
+};
+
+export default connect(mapStateToProps)(CardHeader);
