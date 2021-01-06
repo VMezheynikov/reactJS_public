@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Card from '../../сomponents/CardList/Card';
-import * as actionTypes from '../../store/actions';
 
 class CardPage extends Component {
     render() {
@@ -25,16 +24,4 @@ const mapStateToProps = (state) => {
     return { crds: state.cards };
 };
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        onSave: (id, title, text) =>
-            dispatch({
-                type: actionTypes.SAVE_CARD,
-                cardId: id,
-                title: title,
-                text: text,
-            }),
-    };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(CardPage);
+export default connect(mapStateToProps)(CardPage);

@@ -7,7 +7,12 @@ import { v4 as uuidv4 } from 'uuid';
 import Card from './Card/index';
 import Checkbox from './Checkbox';
 import CardCounter from '../CardCounter';
-import * as actionTypes from '../../store/actions';
+import {
+    onAddCard,
+    onDeleteMarkCards,
+    onReadOnly,
+    onInitCards,
+} from '../../store/actions';
 
 class CardList extends Component {
     componentDidMount() {
@@ -82,7 +87,7 @@ class CardList extends Component {
                         <b>Delete All Checked Cards </b>
                     </label>
                     <label>
-                        <button className="btn" onClick={this.props.onAdd}>
+                        <button className="btn" onClick={this.props.onAddCard}>
                             <FaClone />
                         </button>
                         <b>Add New Card</b>
@@ -100,15 +105,11 @@ const mapStateToProps = (state) => {
     return { crds: state.cards, rdOnly: state.readOnly };
 };
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        onAdd: () => dispatch({ type: actionTypes.ADD_CARD }),
-        onDeleteMarkCards: () => dispatch({ type: actionTypes.REMOVE_CARDS }),
-        onReadOnly: (mode) =>
-            dispatch({ type: actionTypes.READONLY_CARD, mode: mode }),
-        onInitCards: (cards) =>
-            dispatch({ type: actionTypes.INIT_CARDS, cards: cards }),
-    };
+const mapDispatchToProps = {
+    onAddCard,
+    onDeleteMarkCards,
+    onReadOnly,
+    onInitCards,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CardList);

@@ -5,7 +5,7 @@ import './Card.css';
 import CardHeader from './CardHeader';
 import CardBody from './CardBody';
 import withLoadingDelay from '../../../hoc/withLoadingDelay';
-import * as actionTypes from '../../../store/actions';
+import { onSaveCard, onDeleteCard } from '../../../store/actions';
 
 const Card = (props) => {
     const [edited, setEdited] = useState(false);
@@ -32,7 +32,7 @@ const Card = (props) => {
 
     const saveCardHandler = (event) => {
         setEdited(false);
-        props.onSave(props.cardId, editTitle, editText);
+        props.onSaveCard(props.cardId, editTitle, editText);
     };
 
     const editCardHandler = (event) => {
@@ -82,22 +82,9 @@ const mapStateToProps = (state) => {
     return { ctxReadOnly: state.readOnly };
 };
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        onDeleteCard: (id, checked) =>
-            dispatch({
-                type: actionTypes.MARK_REMOVE_CARD,
-                cardId: id,
-                state: checked,
-            }),
-        onSave: (id, title, text) =>
-            dispatch({
-                type: actionTypes.SAVE_CARD,
-                cardId: id,
-                title: title,
-                text: text,
-            }),
-    };
+const mapDispatchToProps = {
+    onDeleteCard,
+    onSaveCard,
 };
 
 export default connect(
