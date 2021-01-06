@@ -1,14 +1,13 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import './Card.css';
-import { CardsContext } from '../../../context/CardsContext';
 import CardHeader from './CardHeader';
 import CardBody from './CardBody';
 import withLoadingDelay from '../../../hoc/withLoadingDelay';
+import { onSaveCard, onDeleteCard } from '../../../store/actions';
 
 const Card = (props) => {
-    const cardContext = useContext(CardsContext);
-
     const [edited, setEdited] = useState(false);
     const [editText, setEditText] = useState(props.text);
     const [editTitle, setEditTitle] = useState(props.title);
@@ -20,7 +19,7 @@ const Card = (props) => {
         } else {
             setHeaderStyle({ color: 'green' });
         }
-        cardContext.removeCard(props.cardId, event.target.checked);
+        props.onDeleteCard(props.cardId, event.target.checked);
     };
 
     const titleChangeHandler = (event) => {
@@ -33,7 +32,7 @@ const Card = (props) => {
 
     const saveCardHandler = (event) => {
         setEdited(false);
-        cardContext.onSave(props.cardId, editTitle, editText);
+        props.onSaveCard(props.cardId, editTitle, editText);
     };
 
     const editCardHandler = (event) => {
@@ -56,6 +55,7 @@ const Card = (props) => {
                 onSave={saveCardHandler}
                 onTitleChange={titleChangeHandler}
                 onStyleChange={styleChangeHandler}
+                onDoubleClick={props.onDoubleClick}
                 onUndo={undoCardHandler}>
                 {props.title}
             </CardHeader>
@@ -64,6 +64,7 @@ const Card = (props) => {
                 editMode={edited}
                 currentText={editText}
                 onTextChange={textChangeHandler}
+                onDoubleClick={props.onDoubleClick}
                 cardId={props.cardId}>
                 {props.text}
             </CardBody>
@@ -77,4 +78,16 @@ Card.propTypes = {
     cardId: PropTypes.string,
 };
 
-export default withLoadingDelay(Card, 'Card');
+const mapStateToProps = (state) => {
+    return { ctxReadOnly: state.readOnly };
+};
+
+const mapDispatchToProps = {
+    onDeleteCard,
+    onSaveCard,
+};
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps,
+)(withLoadingDelay(Card, 'Card'));
