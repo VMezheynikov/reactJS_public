@@ -59,8 +59,9 @@ const reducer = (state = initialState, action) => {
 
         case actionsTypes.INIT_CARDS:
             return { ...state, cards: [...action.cards] };
+        default:
+            return state;
     }
-    return state;
 };
 
 export default reducer;
