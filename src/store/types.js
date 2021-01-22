@@ -4,3 +4,5 @@ export const MARK_REMOVE_CARD = 'MARK_REMOVE_CARD';
 export const SAVE_CARD = 'SAVE_CARD';
 export const READONLY_CARD = 'READONLY_CARD';
 export const INIT_CARDS = 'INIT_CARDS';
+export const LOGIN = 'LOGIN';
+export const LOGOUT = 'LOGOUT';

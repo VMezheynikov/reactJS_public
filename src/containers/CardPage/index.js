@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
+
 import Card from '../../сomponents/CardList/Card';
 
 class CardPage extends Component {
@@ -8,15 +10,19 @@ class CardPage extends Component {
             return c.id === this.props.match.params.id;
         });
         const card = this.props.crds[cardIndex];
-        return (
-            <Card
-                title={card.headerText}
-                text={card.bodyText}
-                key={card.id}
-                cardId={card.id}>
-                {card.bodyText}
-            </Card>
-        );
+        const context =
+            card === undefined ? (
+                <Redirect to="/Home" />
+            ) : (
+                <Card
+                    title={card.headerText}
+                    text={card.bodyText}
+                    key={card.id}
+                    cardId={card.id}>
+                    {card.bodyText}
+                </Card>
+            );
+        return context;
     }
 }
 

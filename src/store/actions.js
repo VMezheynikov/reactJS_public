@@ -5,6 +5,8 @@ import {
     MARK_REMOVE_CARD,
     SAVE_CARD,
     INIT_CARDS,
+    LOGIN,
+    LOGOUT,
 } from './types';
 
 export const onAddCard = () => ({
@@ -36,4 +38,14 @@ export const onSaveCard = (id, title, text) => ({
     cardId: id,
     title: title,
     text: text,
+});
+
+export const onLogin = (login, password) => ({
+    type: LOGIN,
+    login: login,
+    password: password,
+});
+
+export const onLogout = () => ({
+    type: LOGOUT,
 });

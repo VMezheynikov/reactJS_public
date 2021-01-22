@@ -5,45 +5,33 @@ import { FaClone } from 'react-icons/fa';
 import axious from 'axios';
 import { v4 as uuidv4 } from 'uuid';
 import Card from './Card/index';
-import Checkbox from './Checkbox';
 import CardCounter from '../CardCounter';
-import {
-    onAddCard,
-    onDeleteMarkCards,
-    onReadOnly,
-    onInitCards,
-} from '../../store/actions';
+import { onAddCard, onDeleteMarkCards, onInitCards } from '../../store/actions';
 
 class CardList extends Component {
     componentDidMount() {
-        axious
-            .get(
-                'https://raw.githubusercontent.com/BrunnerLivio/PokemonDataGraber/master/output.json',
-            )
-            .then((response) => {
-                const cards = response.data.slice(0, 15).map((i) => {
-                    return {
-                        id: 'id' + uuidv4(),
-                        headerText: i.Name,
-                        bodyText: i.About,
-                    };
+        if (!(this.props.crds.length > 0))
+            axious
+                .get(
+                    'https://raw.githubusercontent.com/BrunnerLivio/PokemonDataGraber/master/output.json',
+                )
+                .then((response) => {
+                    const cards = response.data.slice(0, 15).map((i) => {
+                        return {
+                            id: 'id' + uuidv4(),
+                            headerText: i.Name,
+                            bodyText: i.About,
+                        };
+                    });
+                    this.props.onInitCards(cards);
                 });
-                this.props.onInitCards(cards);
-            });
     }
-
-    readOnlyHandler = (event) => {
-        const mode = event != null && event.target.checked;
-        this.props.onReadOnly(mode);
-    };
 
     doubleClickHandler = (id) => {
         this.props.history.push({ pathname: '/card' + id });
     };
 
     render() {
-        let checkboxTitle = 'Read only';
-
         let cardList = (
             <div style={{ display: 'flex', flexWrap: 'wrap' }}>
                 {this.props.crds.map((card, index) => {
@@ -71,13 +59,6 @@ class CardList extends Component {
                         left: '5px',
                         top: '5px',
                     }}>
-                    <label>
-                        <Checkbox
-                            defaultChecked={this.props.rdOnly}
-                            onClick={this.readOnlyHandler}
-                        />
-                        <b> {checkboxTitle} </b>
-                    </label>
                     <label>
                         <button
                             className="btn"
@@ -108,7 +89,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
     onAddCard,
     onDeleteMarkCards,
-    onReadOnly,
     onInitCards,
 };
 

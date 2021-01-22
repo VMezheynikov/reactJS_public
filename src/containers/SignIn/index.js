@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import './SignIn.css';
 import { FaSignInAlt } from 'react-icons/fa';
 import Input from '../../сomponents/UI/Input';
+import { onLogin } from '../../store/actions';
 
 class SingIn extends Component {
     state = {
@@ -68,6 +70,7 @@ class SingIn extends Component {
         for (let element in this.state.loginForm) {
             loginData[element] = this.state.loginForm[element].value;
         }
+        this.props.onLogin(loginData['login'], loginData['password']);
         this.props.history.replace('/home');
     };
 
@@ -123,4 +126,8 @@ class SingIn extends Component {
     }
 }
 
-export default SingIn;
+const mapDispatchToProps = {
+    onLogin,
+};
+
+export default connect(null, mapDispatchToProps)(SingIn);
