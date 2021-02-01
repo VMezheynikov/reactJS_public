@@ -7,7 +7,7 @@ import CardBody from './CardBody';
 import withLoadingDelay from '../../../hoc/withLoadingDelay';
 import { onSaveCard, onDeleteCard } from '../../../store/actions';
 
-const Card = (props) => {
+export const Card = (props) => {
     const [edited, setEdited] = useState(false);
     const [editText, setEditText] = useState(props.text);
     const [editTitle, setEditTitle] = useState(props.title);

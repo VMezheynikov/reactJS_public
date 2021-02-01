@@ -6,7 +6,7 @@ import { FaUndo } from 'react-icons/fa';
 import '../Card.css';
 import TextInputField from '../TextInputField';
 
-const CardHeader = (props) => {
+export const CardHeader = (props) => {
     let editPart = null;
     let readOnly = props.ctxReadOnly;
 

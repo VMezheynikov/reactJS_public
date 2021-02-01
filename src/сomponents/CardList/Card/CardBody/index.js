@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import '../Card.css';
 import TextInputField from '../TextInputField';
 
-const CardBody = (props) => {
+export const CardBody = (props) => {
     let editPart = null;
     if (!props.ctxReadOnly) {
         editPart = (
